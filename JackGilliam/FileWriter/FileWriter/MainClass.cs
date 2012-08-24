@@ -84,9 +84,10 @@ namespace FileWriter
             int count = 0;
             do
             {
-                if (count == 1)
+                if (count >= 1)
                 {
                     (errorMessage).PrntLine(errorColor);
+                    count = 0;
                 }
                 value = (promptMessage).ReadLn(promptColor);
                 count += 1;
@@ -120,7 +121,7 @@ namespace FileWriter
                 var properties = person.GetCurrentValues();
                 int propertyChoice = DisplayChoices<string>(GetPrompt(MessageDictionary.Prompt.Property), GetErr(MessageDictionary.Error.NotAChoice), properties, _questionColor, _errorColor);
                 var currentValue = properties[propertyChoice];
-                var newValue = (GetPrompt(MessageDictionary.Prompt.Value)).ReadLn(_questionColor);
+                var newValue = (AskFor(GetPrompt(MessageDictionary.Prompt.Value), GetErr(MessageDictionary.Error.Invalid),_questionColor, _errorColor));
                 person.UpdateValue(propertyChoice, newValue);
                 values[choice] = person.ToString();
                 fileHandle.Update(values);
@@ -161,9 +162,10 @@ namespace FileWriter
                 int numOfChoices = choices.Count + subtractionValue;
                 do
                 {
-                    if (count == 1)
+                    if (count >= 1)
                     {
                         (errorMessage).PrntLine(errorColor);
+                        count = 0;
                     }
                     (promptMessage).PrntLine(promptColor);
                     for (int i = subtractionValue; i < numOfChoices; i += 1)
